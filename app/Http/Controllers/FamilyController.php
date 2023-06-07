@@ -42,6 +42,7 @@ class FamilyController extends Controller
                 $inf[$ind]['city_name']=$city->name;
             //---------------------------------------------
             $inf[$ind]['plant_name']='dose not has a plants yet';
+            $inf[$ind]['plants_name']=$data->plants()->get();
             //---------------------------------------------
             $ind++;
         }
@@ -69,6 +70,7 @@ class FamilyController extends Controller
             $city=City::find($data->city_id);
             if($city)
                 $inf[$ind]['city_name']=$city->name;
+            $inf[$ind]['plants_name']=$data->plants()->get();
             $ind++;
         }
         $city=City::all();
@@ -81,7 +83,6 @@ class FamilyController extends Controller
         $family=Family::find($request->input('family_id'));
         if($family!==null)
             $family->plants()->attach($request['plants_id']);
-        $family->save();
 //        $plantInf=$family->plants()->get($request['plants_id']);
         $family=Family::all();
         $inf=[];
@@ -97,13 +98,12 @@ class FamilyController extends Controller
             if($city)
                 $inf[$ind]['city_name']=$city->name;
             //=================================================
+            $inf[$ind]['plants_name']=$data->plants()->get();
 //            dd($data->plants()->get());
             $ind++;
         }
         $city=City::all();
         $plant=Plant::all();
-        $x=5;
-
         return view('family.show',compact('inf','city','plant'))->with($x);
     }
 
